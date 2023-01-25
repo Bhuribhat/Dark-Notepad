@@ -34,7 +34,7 @@ class Notepad:
         self.__scrollBar = Scrollbar(self.__textArea, cursor="arrow")
 
         try:
-            self.__root.wm_iconbitmap("notepad.ico")
+            self.__root.wm_iconbitmap("./assets/notepad.ico")
             self.__width  = kwargs['width']
             self.__height = kwargs['height']
         except KeyError:
@@ -182,7 +182,13 @@ class Notepad:
             self.__textArea.delete(1.0, END)
 
     def new_file(self):
-        Notepad().run()
+        contract = {
+            "name"  : self.__name,
+            "mail"  : self.__mail,
+            "phone" : self.__phone,
+            "social": self.__social
+        }
+        Notepad(**contract).run()
 
     def save_as(self):
         self.__file = asksaveasfile(initialfile='Untitled.txt', defaultextension=".txt",
@@ -266,10 +272,10 @@ class Notepad:
             print(error)
 
     def contact(self):
-        name   = f"Name: {str(self.__name):>12}"
-        mail   = f"Mail: {str(self.__mail):>12}"
-        phone  = f"Telephone: {str(self.__phone):>7}"
-        social = f"Social Media: {str(self.__social)}"
+        name   = f"Name:         {self.__name}"
+        mail   = f"Mail:         {self.__mail}"
+        phone  = f"Telephone:    {self.__phone}"
+        social = f"Social Media: {self.__social}"
 
         display = f"{name}\n{mail}\n{social}\n{phone}"
         self.__textArea.insert(END, display)
@@ -480,10 +486,3 @@ class Notepad:
     # Run main application
     def run(self):
         self.__root.mainloop()
-
-
-if __name__ == '__main__':
-    APP = Notepad(
-        name=None, mail=None, phone=None, social=None
-    )
-    APP.run()
